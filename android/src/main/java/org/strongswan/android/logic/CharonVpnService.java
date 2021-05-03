@@ -779,19 +779,19 @@ public class CharonVpnService extends VpnService implements Runnable, VpnStateSe
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         public synchronized void establishBlocking() {
             /* just choose some arbitrary values to block all traffic (except for what's configured in the profile) */
-            mCache.addAddress("172.16.252.1", 32);
-            mCache.addAddress("fd00::fd02:1", 128);
-            mCache.addRoute("0.0.0.0", 0);
-            mCache.addRoute("::", 0);
-            /* set DNS servers to avoid DNS leak later */
-            mBuilder.addDnsServer("8.8.8.8");
-            mBuilder.addDnsServer("2001:4860:4860::8888");
-            /* use blocking mode to simplify packet dropping */
-            mBuilder.setBlocking(true);
-            ParcelFileDescriptor fd = establishIntern();
-            if (fd != null) {
-                mDropper.start(fd);
-            }
+            // mCache.addAddress("172.16.252.1", 32);
+            // mCache.addAddress("fd00::fd02:1", 128);
+            // mCache.addRoute("0.0.0.0", 0);
+            // mCache.addRoute("::", 0);
+            // /* set DNS servers to avoid DNS leak later */
+            // mBuilder.addDnsServer("8.8.8.8");
+            // mBuilder.addDnsServer("2001:4860:4860::8888");
+            // /* use blocking mode to simplify packet dropping */
+            // mBuilder.setBlocking(true);
+            // ParcelFileDescriptor fd = establishIntern();
+            // if (fd != null) {
+            //     mDropper.start(fd);
+            // }
         }
 
         public synchronized void closeBlocking() {
@@ -913,18 +913,18 @@ public class CharonVpnService extends VpnService implements Runnable, VpnStateSe
             SelectedAppsHandling appHandling = profile.getSelectedAppsHandling();
             mSelectedApps = profile.getSelectedAppsSet();
             /* exclude our own app, otherwise the fetcher is blocked */
-            switch (appHandling) {
-                case SELECTED_APPS_DISABLE:
-                    appHandling = SelectedAppsHandling.SELECTED_APPS_EXCLUDE;
-                    mSelectedApps.clear();
-                    /* fall-through */
-                case SELECTED_APPS_EXCLUDE:
-                    mSelectedApps.add(getPackageName());
-                    break;
-                case SELECTED_APPS_ONLY:
-                    mSelectedApps.remove(getPackageName());
-                    break;
-            }
+            // switch (appHandling) {
+            //     case SELECTED_APPS_DISABLE:
+            //         appHandling = SelectedAppsHandling.SELECTED_APPS_EXCLUDE;
+            //         mSelectedApps.clear();
+            //         /* fall-through */
+            //     case SELECTED_APPS_EXCLUDE:
+            //         mSelectedApps.add(getPackageName());
+            //         break;
+            //     case SELECTED_APPS_ONLY:
+            //         mSelectedApps.remove(getPackageName());
+            //         break;
+            // }
             mAppHandling = appHandling;
 
             if (profile.getDnsServers() != null) {
