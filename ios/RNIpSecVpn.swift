@@ -126,13 +126,13 @@ class RNIpSecVpn: RCTEventEmitter {
                 vpnManager.saveToPreferences(completionHandler: { (error) -> Void in
                     if error != nil {
                         print("VPN Preferences error: 2")
-                        rejecter("VPN_ERR", "VPN Preferences error: 2", defaultErr)
+                        //rejecter("VPN_ERR", "VPN Preferences error: 2", defaultErr)
                     } else {
                         vpnManager.loadFromPreferences(completionHandler: { error in
 
                             if error != nil {
                                 print("VPN Preferences error: 2")
-                                rejecter("VPN_ERR", "VPN Preferences error: 2", defaultErr)
+                                //rejecter("VPN_ERR", "VPN Preferences error: 2", defaultErr)
                             } else {
                                 var startError: NSError?
 
