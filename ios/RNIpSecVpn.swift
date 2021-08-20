@@ -75,6 +75,7 @@ class KeychainService: NSObject {
 
 @objc(RNIpSecVpn)
 class RNIpSecVpn: RCTEventEmitter {
+    var Prepared = false
     
     @objc override static func requiresMainQueueSetup() -> Bool {
         return true
@@ -86,13 +87,15 @@ class RNIpSecVpn: RCTEventEmitter {
     
     @objc
     func prepare(_ findEventsWithResolver: RCTPromiseResolveBlock, rejecter: RCTPromiseRejectBlock) -> Void {
-
-        // Register to be notified of changes in the status. These notifications only work when app is in foreground.
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object : nil , queue: nil) {
-            notification in let nevpnconn = notification.object as! NEVPNConnection
-            self.sendEvent(withName: "stateChanged", body: [ "state" : checkNEStatus(status: nevpnconn.status) ])
+        if (!Prepared) {
+            // Register to be notified of changes in the status. These notifications only work when app is in foreground.
+            NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object : nil , queue: nil) {
+                notification in let nevpnconn = notification.object as! NEVPNConnection
+                self.sendEvent(withName: "stateChanged", body: [ "state" : checkNEStatus(status: nevpnconn.status) ])
+            }
+            findEventsWithResolver(nil)
+            Prepared = true
         }
-        findEventsWithResolver(nil)
     }
     
     @objc
